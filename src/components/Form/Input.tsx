@@ -6,7 +6,7 @@ interface MyInputProps extends InputProps {
   label?: string;
 }
 
-export const Input = ({ name, label, ...rest }: MyInputProps) => {
+export default function Input ({ name, label, ...rest }: MyInputProps) {
 
   return (
     <FormControl>
