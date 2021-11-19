@@ -1,6 +1,12 @@
 import Head from 'next/head';
+import dynamic from 'next/dynamic'
 import { Flex, Button, Stack } from "@chakra-ui/react";
-import { Input } from '../components/Form/Input';
+// import  Input  from '../components/Form/Input';
+
+const Input  = dynamic(() => import('../components/Form/Input'), {
+  ssr: false,
+});
+
 
 export default function SignIn() {
   return (
