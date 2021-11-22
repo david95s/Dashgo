@@ -1,8 +1,15 @@
 import Head from 'next/head';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { Flex, Button, Stack, Text, Input as ChakraInput } from "@chakra-ui/react";
+import {
+  Flex,
+  Button,
+  Stack,
+  Input as ChakraInput
+} from "@chakra-ui/react";
 import { Input } from '../components/Form/Input';
 
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 
 type SignInFormData = {
@@ -11,9 +18,24 @@ type SignInFormData = {
 }
 
 
+//Esquema de validação;
+const signInformSchema = yup.object().shape({
+  email: yup.string().required("Email é obrigatório").email("Email inválido"),
+  password: yup.string().required("Senha é obrigatório"),
+});
+
+
 export default function SignIn() {
 
-  const { register, handleSubmit, formState } = useForm();
+  /*
+    Passando yupResolver como parametro
+    EU NÃO preciso sair validando campo a 
+    campo com => {  required: "Senha é obrigatório" }
+  */
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(signInformSchema),
+  });
+
   const { errors } = formState;
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
@@ -52,9 +74,7 @@ export default function SignIn() {
               type="email"
               unikId="emailLogin"
               error={errors?.email}
-              {
-                ...register("email", { required: "E-mail é obrigatório" })
-              }
+              {...register("email")}
             />
             <Input 
               label="Senha"
@@ -62,9 +82,7 @@ export default function SignIn() {
               type="password"
               unikId="passwordLogin"
               error={errors?.password}
-              {
-                ...register("password", {  required: "Senha é obrigatório" })
-              }
+              {...register("password")}
             />
 
           </Stack>
