@@ -1,14 +1,25 @@
 import Head from 'next/head';
-import dynamic from 'next/dynamic'
-import { Flex, Button, Stack } from "@chakra-ui/react";
-// import  Input  from '../components/Form/Input';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Flex, Button, Stack, Input as ChakraInput } from "@chakra-ui/react";
+import { Input } from '../components/Form/Input';
 
-const Input  = dynamic(() => import('../components/Form/Input'), {
-  ssr: false,
-});
+
+
+type SignInFormData = {
+  email: string;
+  password: string;
+}
 
 
 export default function SignIn() {
+
+  const { register, handleSubmit, formState } = useForm();
+
+  const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log(values)
+  }
+
   return (
     <div>
       <Head>
@@ -30,17 +41,23 @@ export default function SignIn() {
           p="8"
           borderRadius="8"
           flexDirection="column"
+          onSubmit={handleSubmit(handleSignIn)}
         >
           <Stack spacing="4">
             <Input 
               label="E-mail"
               name="email"
               type="email"
+              unikId="emailLogin"
+              {...register("email")}
             />
             <Input 
               label="Senha"
               name="password"
               type="password"
+              unikId="passwordLogin"
+
+              {...register("password")}
             />
           </Stack>
           <Button 
@@ -48,6 +65,7 @@ export default function SignIn() {
             mt="6"
             colorScheme="pink"
             size="lg"
+            isLoading={formState.isSubmitting}
           >Entrar</Button>
         </Flex>  
       </Flex>

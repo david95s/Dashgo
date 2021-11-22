@@ -1,4 +1,5 @@
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { 
   Box,
   Flex,
@@ -11,16 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/SideBar";
+import { Input } from '../../components/Form/Input';
 
-
-
-const Input  = dynamic(() => import('../../components/Form/Input'), {
-  ssr: false,
-});
 
 export default function CreateUser(){
-  
- 
   return (
     <Box>
       <Header/>
@@ -33,19 +28,21 @@ export default function CreateUser(){
 
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing={["4", "6", "8"]} w="100%">
-              <Input name="myname" label="Nome completo"/>
-              <Input name="email" type="email" label="E-mail"/>
+              <Input unikId="nameCreate" name="myname" label="Nome completo"/>
+              <Input unikId="emailCreate" name="email" type="email" label="E-mail"/>
             </SimpleGrid>
 
             <SimpleGrid minChildWidth="240px" spacing={["4", "6", "8"]} w="100%">
-              <Input name="password" type="password" label="Senha"/>
-              <Input name="password_confirmation" type="password" label="Confirmação da senha"/>
+              <Input unikId="passCreate" name="password" type="password" label="Senha"/>
+              <Input unikId="confirmPassCreate" name="password_confirmation" type="password" label="Confirmação da senha"/>
             </SimpleGrid>
           </VStack>
 
           <Flex mt="8" justify="flex-end">
             <HStack spacing="4">
-              <Button colorScheme="whiteAlpha">Cancelar</Button>
+              <Link href="/users" passHref>
+                <Button as="a" colorScheme="whiteAlpha">Cancelar</Button>              
+              </Link>
               <Button colorScheme="pink">Salvar</Button>
             </HStack>
           </Flex>
