@@ -8,15 +8,12 @@ import { Input as ChakraInput,
 import { FieldError } from 'react-hook-form';
 
 
-
-
 interface MyInputProps extends InputProps {
   name: string;
   label?: string;
   unikId?: string;
   error?: FieldError;
 }
-
 
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, MyInputProps> =  ({ name, label, unikId, error = null, ...rest }, ref) => {
@@ -32,9 +29,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, MyInputProps> =  ({ 
         id={ name }
         focusBorderColor="pink.500"
         bg="gray.900"
-        variant="filled"
-        // error={errors?.name}
-        
+        variant="filled"        
         size="lg"
         _hover={{
           bgColor: "gray.900"
